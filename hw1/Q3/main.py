@@ -1,7 +1,8 @@
 import numpy as np
 import logging
 import pandas as pd
-
+import matplotlib.pyplot as plt
+import os 
 
 class OneMaxSolver(object):
     def __init__(self, bits:int, num_of_populations :int, num_of_generations:int, cross_probablity: float):
@@ -59,6 +60,36 @@ class OneMaxSolver(object):
                 new_population.extend([offspring1, offspring2])
             self.population = np.array(new_population)
             self.reocrd_infos(generation)
+            
+def analyze(infos):
+    combined_info = pd.concat(infos)
+    mean_info = combined_info.groupby("generation").mean()
+    
+    if not os.path.exists("output"):
+        os.makedirs("output")
+    plt.figure(figsize=(10, 6))
+    plt.plot(mean_info.index, mean_info["max_fitness"], label="Max Fitness")
+    plt.xlabel("Generation")
+    plt.ylabel("Max Fitness")
+    plt.title("Max Fitness over Generations")
+    plt.legend()
+    plt.grid(True)
+    plt.savefig("output/max_fitness.png")
+    plt.close()
+    
+    plt.figure(figsize=(10, 6))
+    plt.plot(mean_info.index, mean_info["mean_fitness"], label="Mean Fitness")
+    plt.plot(mean_info.index, mean_info["max_fitness"], label="Max Fitness")
+    plt.plot(mean_info.index, mean_info["min_fitness"], label="Min Fitness")
+    plt.plot(mean_info.index, mean_info["std_fitness"], label="Std Fitness")
+    plt.xlabel("Generation")
+    plt.ylabel("Fitness")
+    plt.title("Fitness over Generations")
+    plt.legend()
+    plt.grid(True)
+    plt.savefig("output/fitness_over_generations.png")
+    plt.close()
+
 
 def main():
     logging.basicConfig(level=logging.INFO)
@@ -67,13 +98,16 @@ def main():
     num_of_generations = 100
     crossover_probablity = 1.0
     runs = 10
+    infos = []
     for i in range(runs):
         onemax = OneMaxSolver(bits, num_of_populations, num_of_generations, crossover_probablity)
         onemax.run()
-        infos = onemax.get_info()
-        print(infos.tail())
+        info = onemax.get_info()
+        infos.append(info)
         logging.info(f"Run {i} finished")
-    logging.info("All runs finished")        
+    logging.info("All runs finished, start analyzing")
+    analyze(infos)
+    logging.info("All finished")
 
 if __name__ == "__main__":
     main()
