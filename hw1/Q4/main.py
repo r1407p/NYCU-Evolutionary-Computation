@@ -19,7 +19,7 @@ class OneMaxSolver(object):
         self.reocrd_infos(0)
 
     def reocrd_infos(self, generation):
-        fitness = self.evaluate_fitness(self.population)
+        fitness = self.evaluate_fitness(self.population) - 1000  # Subtract 1000 from fitness values
         new_row = {
             "generation": generation,
             "max_fitness": np.max(fitness),
@@ -30,7 +30,7 @@ class OneMaxSolver(object):
         self.infos.loc[len(self.infos)] = new_row
 
     def evaluate_fitness(self, population):
-        return np.sum(population, axis=1)
+        return 1000 + np.sum(population, axis=1)
 
     def get_info(self):
         return self.infos
