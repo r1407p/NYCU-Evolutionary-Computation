@@ -67,6 +67,8 @@ def analyze(infos):
     
     if not os.path.exists("output"):
         os.makedirs("output")
+    mean_info.to_csv("output/mean_info.csv")
+    
     plt.figure(figsize=(10, 6))
     plt.plot(mean_info.index, mean_info["max_fitness"], label="Max Fitness")
     plt.xlabel("Generation")
