@@ -16,7 +16,7 @@
   - In the original version, the algorithm made clear and consistent progress, indicating that it was effectively evolving towards better solutions.
   - In the modified version, the algorithm appeared to be confused, with fitness values fluctuating without a clear upward direction.
   - Extension research: Except max fitness values, I also calculate the mean, min fitness value and std of fitness value, we can see that the mean fitness values, are expectedly uptrend and std downtrend. This indicated the whole population is uptrend, however since throught the generations the population will converge, and the converge speed is greater than the improve speed. so we can see that the nax fitness value have downtrend  is not that confuse.
-  ![Fitness Over Generations](../Q4/output/fitness_over_generation.png)
+  ![Fitness Over Generations](../Q4/output/fitness_over_generations.png)
   
 - **Selection Pressure**:
   - The changes to the fitness function reduced the differences between the fitness scores of various solutions, making it harder for the algorithm to consistently select the best individuals.
