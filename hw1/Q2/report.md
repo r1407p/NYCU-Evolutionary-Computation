@@ -1,3 +1,4 @@
+# Precision caculation
 To achieve precision 0.001 in the interval [0, 1].
 
 We need at least (1-0)/0.001 = 1000 distinct values.

@@ -1,3 +1,4 @@
+# Comparasion between Q6 and Q7
 ### Comparison of Results: Original vs. Modified Fitness Function (Tournament selection)
 
 1. **Original Fitness Function (Uptrend)**:
