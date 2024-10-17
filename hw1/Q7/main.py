@@ -40,6 +40,12 @@ class OneMaxSolver(object):
         probabilities = fitness / total_fitness
         return np.random.choice(len(fitness), p=probabilities)
 
+    def tournament_selection(self, fitness):
+        tournament_size = 2
+        participants = np.random.choice(len(fitness), size=tournament_size, replace=False)
+        winner = participants[np.argmax(fitness[participants])]
+        return winner
+
     def one_point_crossover(self, parent1, parent2):
         crossover_point = np.random.randint(1, self.bits)
         offspring1 = np.concatenate([parent1[:crossover_point], parent2[crossover_point:]])
@@ -51,8 +57,8 @@ class OneMaxSolver(object):
             fitness = self.evaluate_fitness(self.population)
             new_population = []
             for _ in range(self.num_of_populations // 2):
-                parent1 = self.population[self.roulette_wheel_selection(fitness)]
-                parent2 = self.population[self.roulette_wheel_selection(fitness)]
+                parent1 = self.population[self.tournament_selection(fitness)]
+                parent2 = self.population[self.tournament_selection(fitness)]
                 if np.random.rand() < self.cross_probablity:
                     offspring1, offspring2 = self.one_point_crossover(parent1, parent2)
                 else:
@@ -60,6 +66,7 @@ class OneMaxSolver(object):
                 new_population.extend([offspring1, offspring2])
             self.population = np.array(new_population)
             self.reocrd_infos(generation)
+            
             
 def analyze(infos):
     combined_info = pd.concat(infos)
