@@ -1,4 +1,4 @@
-## Tables of (1,1)-ES and (1+1)-ES using correlated Gaussian mutation
+## Tables of (1,1)-ES and (1+1)-ES using  uncorrelated Gaussian mutation
 
 
 ### (1, 1)-ES Results
