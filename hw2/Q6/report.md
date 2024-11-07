@@ -1,28 +1,52 @@
-## Compare and contrast the results you obtained in problems 3 and 5.
-Discuss what you think about the self-adaptation.
+## Comparison of Results from Problems 3 and 5
 
 ### (1, 1)-ES with Correlated vs. Uncorrelated Mutation:
-- Both **correlated** and **uncorrelated Gaussian mutations** failed to converge on the target within the maximum number of iterations (10 million) across all step sizes for (1, 1)-ES. This suggests that neither mutation type provided sufficient adaptation to reach the goal with this strategy.
-- The lack of adaptability in (1, 1)-ES reflects the high dependency on initial conditions and the step-size chosen. Without self-adaptive mechanisms, the strategy is unable to explore the solution space effectively and converge to the target.
+
+- **Correlated and Uncorrelated Gaussian Mutations**: Both types of mutation failed to converge to the target within the 10 million iterations allowed for the **(1, 1)-ES** strategy, regardless of the step size. This suggests that neither type of mutation was effective enough in this context to adapt the search process and reach the desired solution.
+  
+- **Lack of Adaptability in (1, 1)-ES**: The absence of self-adaptive mechanisms in **(1, 1)-ES** reflects a challenge in exploring the solution space. Without the ability to adjust the mutation step dynamically, the algorithm remains highly sensitive to the starting point and initial step size, making it difficult to find an optimal solution. This points to a limitation of the (1, 1)-ES method, as it cannot efficiently explore the space or adapt to the complexity of the optimization task.
+
+---
 
 ### (1 + 1)-ES with Correlated Mutation:
-- For **correlated mutation** with (1 + 1)-ES, there was a notable dependency on the step size. Specifically, lower step sizes (σ = 0.01 and 0.1) performed much better, with the average iterations being significantly less than for σ = 1.0.
-- However, the correlated mutation method with a high step size (σ = 1.0) also failed to converge within the set limit, indicating that the mutation step-size adjustment may not have been sufficient to facilitate convergence for larger initial step sizes.
+
+- **Step Size Dependency**: In the case of **correlated mutation** within **(1 + 1)-ES**, the performance was heavily influenced by the step size. Smaller step sizes (σ = 0.01 and 0.1) performed better, with fewer iterations required to converge compared to larger step sizes (σ = 1.0), where convergence was not achieved within the allowed iterations.
+  
+- **Failure with Larger Step Sizes**: Even with **correlated mutation**, large step sizes (σ = 1.0) failed to produce a result within the maximum iterations. This suggests that the mutation mechanism, while effective for small step sizes, struggled to handle larger step sizes, pointing to an insufficiency in adjusting the mutation step for different stages of the optimization process.
+
+---
 
 ### (1 + 1)-ES with Uncorrelated Mutation:
-- **Uncorrelated Gaussian mutation** with self-adaptive step sizes in the (1 + 1)-ES strategy shows substantial improvement over correlated mutation, particularly with smaller and moderate step sizes.
-- This self-adaptive mechanism resulted in faster convergence across runs, showing average iterations that are substantially lower than those seen in correlated mutation results for both low and moderate step sizes.
-- For the larger step size (σ = 1.0), the uncorrelated mutation still showed an improvement, though performance degraded slightly compared to smaller step sizes.
+
+- **Self-Adaptation in Uncorrelated Mutation**: **Uncorrelated Gaussian mutation**, with its self-adaptive step size mechanism, showed significant improvement over **correlated mutation**. Particularly with smaller and moderate step sizes, the self-adaptive feature allowed the algorithm to converge much faster and with fewer iterations.
+
+- **Better Performance at Smaller Step Sizes**: The self-adaptive mechanism allowed the **(1 + 1)-ES** strategy to fine-tune its mutation step dynamically. This helped the algorithm adapt to the fitness landscape more efficiently, leading to a noticeable improvement in convergence speed, especially when compared to the results from the correlated mutation.
+
+- **Degraded Performance with Larger Step Sizes**: While the self-adaptive uncorrelated mutation showed better performance overall, its effectiveness decreased when using a large step size (σ = 1.0). This still represented an improvement over correlated mutation, though it highlighted that even self-adaptive mechanisms struggle with overly large mutation steps in certain scenarios.
+
+---
 
 ### Self-Adaptation:
-- **Self-adaptation** in uncorrelated Gaussian mutation helped the (1 + 1)-ES strategy adapt its mutation steps dynamically, allowing it to "fine-tune" the step-size based on the fitness landscape. This adjustment likely prevents large step sizes from overshooting and allows smaller step sizes to explore efficiently around potential minima.
-- In contrast, the lack of effective self-adaptation in correlated mutations made it difficult to find an optimal balance between exploration and exploitation. This highlights the value of self-adaptation, especially in complex landscapes or higher-dimensional optimization problems, where an initial, fixed step size may not be suitable for the entire search process.
-- Overall, **self-adaptive mechanisms enable the algorithm to adjust its mutation strengths based on progress, thereby achieving a balance between fast convergence and the ability to escape local optima**. This flexibility is particularly advantageous in (1 + 1)-ES, where it can guide the search more effectively than a rigid approach seen in the (1, 1)-ES results.
 
-### Parameters:
-- **n = 10**: The dimension of the optimization problem, which determines the size of the individual solution vector.
-- **max_iterations = 10,000,000**: The maximum number of iterations allowed for the optimization algorithm to converge to the target solution.
-- **target = 0.005**: The target objective function value (f(x)) that the algorithm is trying to reach.
-- **τ (tau) = 1 / np.sqrt(2 * np.sqrt(n))**: This parameter controls the step size adaptation and is used to adjust the step size during the evolution process. It is set based on the problem's dimensionality and helps maintain diversity in the population.
-- **τ' (tau_prime) = 1 / np.sqrt(2 * n)**: This parameter is used for adaptive mutation step sizes. It also scales the step size with respect to the problem's dimensionality, but it focuses on the global scaling of mutation.
-- **ε₀ (epsilon) = 1e-6**: A small value used for mutation scaling or convergence criteria. This ensures numerical stability and prevents the step size from becoming too small, allowing the algorithm to continue progressing without stagnation.
+- **Self-Adaptation's Role**: The **self-adaptation** seen in **uncorrelated Gaussian mutation** was key to its improved performance in **(1 + 1)-ES**. It allowed the algorithm to adjust the mutation step size dynamically based on the progress in the optimization process. This adaptability helps prevent overshooting the target when large steps are used and allows for finer exploration with smaller steps, helping the algorithm avoid getting stuck in local optima.
+
+- **Advantages of Self-Adaptation**: The ability to adjust the mutation strength as needed enabled the algorithm to strike a balance between exploration (searching broadly across the space) and exploitation (refining the solution). This is particularly useful in complex landscapes where an initial fixed step size may not work well for the entire optimization process.
+
+- **Challenges Without Self-Adaptation**: In contrast, the **(1, 1)-ES** with **correlated mutation** struggled because the algorithm couldn't adjust the step size dynamically. This lack of adaptability made it difficult to effectively balance exploration and exploitation, leading to failure in finding an optimal solution.
+
+---
+
+### Key Parameters:
+
+- **n = 10**: The dimensionality of the optimization problem, determining the size of the solution vector.
+- **max_iterations = 10,000,000**: The upper limit on the number of iterations for the algorithm to reach the target solution.
+- **target = 0.005**: The desired value of the objective function (f(x)) that the algorithm aims to achieve.
+- **τ (tau) = 1 / np.sqrt(2 * np.sqrt(n))**: A parameter that controls the step size adaptation, ensuring the evolution process is stable and diverse based on the problem's dimensionality.
+- **τ' (tau_prime) = 1 / np.sqrt(2 * n)**: Another adaptive parameter for adjusting mutation step sizes globally, based on the dimension of the problem.
+- **ε₀ (epsilon) = 1e-6**: A small value that helps prevent numerical issues by avoiding overly small mutation steps and ensuring stable convergence.
+
+---
+
+### Conclusion:
+
+Self-adaptation, particularly in the case of **uncorrelated Gaussian mutation** within the **(1 + 1)-ES** strategy, provides a more effective and flexible search mechanism than the static mutation step sizes used in **(1, 1)-ES**. By dynamically adjusting the step size, the algorithm is able to explore the solution space more efficiently and avoid issues like overshooting or stagnation, ultimately resulting in faster convergence and better performance.
