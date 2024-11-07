@@ -1,25 +1,17 @@
 ## Discussion on ES and Steady-State GAs as Extremes of Population Size and Offspring Creation
 
-### Population Size
+### Evolution Strategies (ES)
+- **Population Size:** ES generally uses **large populations**. This means many individuals explore different areas of the search space, reducing the risk of getting stuck in local optima.
+- **Offspring Creation:** In each generation, ES generates a **large number of offspring** (often more than the parent population), allowing extensive exploration of the solution space.
+- **Selection:** ES often uses **μ+λ** or **μ,λ** selection strategies, where offspring and parents compete for survival or only offspring are selected, respectively. This encourages diversity and broad search, helping the algorithm adapt quickly.
 
-- **Evolution Strategies (ES)**:
-   - ES typically employs a relatively **small population size**, sometimes as small as a single individual (e.g., in (1+1)-ES). Even in larger variants (e.g., (μ,λ)-ES), the population sizes are often modest. This small population size is paired with high selection pressure, leading to quick generational turnover and rapid evolution of individuals in the population.
+### Steady-State Genetic Algorithms (SSGA)
+- **Population Size:** SSGA maintains a **small, stable population** size. Only a few individuals are replaced at a time, making changes to the population slow and incremental.
+- **Offspring Creation:** SSGA produces **one or two offspring** per iteration, leading to gradual change that focuses on fine-tuning rather than broad exploration.
+- **Selection:** SSGA replaces weaker individuals with better offspring, so the population evolves slowly but steadily toward higher fitness.
 
-- **Steady-State Genetic Algorithms (GAs)**:
-   - Steady-state GAs, on the other hand, work with a **larger and stable population size**. In this approach, most individuals in the population persist across generations, and only a small subset of the population is replaced with offspring at each step. The larger population size in steady-state GAs enables maintaining a greater diversity, which allows for slower, more incremental evolutionary changes.
+### Key Difference: Exploration vs. Exploitation
+- **ES** aims for **exploration** by maintaining a large population and creating many offspring, seeking global optimization.
+- **SSGA** leans toward **exploitation**, refining the existing population gradually to find a good local solution.
 
-### Number of Offspring Created
-
-- **Evolution Strategies (ES)**:
-   - ES often focuses on creating **a high number of offspring relative to the population size** in each generation. For instance, in a (1,λ)-ES configuration, one parent generates multiple offspring (e.g., λ > 1). This intense offspring generation rate accelerates exploration, as the selection among numerous offspring helps find the best solutions more quickly, albeit at the cost of potentially reduced diversity in the parent pool.
-
-- **Steady-State GAs**:
-   - In contrast, steady-state GAs generate **only a small number of offspring per generation**, often just one or two, and replace a few individuals in the existing population with these new offspring. This approach contrasts with ES, as it emphasizes long-term incremental improvements within a stable population. It helps prevent drastic shifts in the population composition, preserving diversity over more extended periods.
-
-### Summary
-
-In summary, ES and steady-state GAs represent extremes in terms of population size and offspring production:
-- **ES** favors **small populations** with **high offspring numbers**, maximizing selection pressure and facilitating rapid, often aggressive, evolution.
-- **Steady-state GAs** use a **larger, more stable population** with **minimal offspring** generation, emphasizing gradual, diversity-preserving evolution.
-
-These contrasting strategies highlight different priorities in evolutionary algorithms: ES values rapid adaptation, while steady-state GAs favor stability and incremental improvement.
+In essence, **ES** covers a broad search space with many offspring, while **SSGA** makes small, steady changes to a smaller population, focusing on fine-tuning.
